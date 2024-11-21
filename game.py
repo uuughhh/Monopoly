@@ -166,7 +166,7 @@ def handle_jail(player, board):
         if player.pay_jail_fine():
             print(f"{player.name} paid HKD 150.")
             player.release_from_jail()
-            move_out_of_jail(player,None,board)
+            move_out_of_jail(player,board)
         else:
             print(f"{player.name} couldn't pay the fine and goes bankrupt.")
 
