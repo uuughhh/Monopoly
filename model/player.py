@@ -8,10 +8,10 @@ class Player:
         self.jail_turns = jail_turns
 
     def pay_jail_fine(self):
-        if self.money >= 150:
+        if self.money >=150:
             self.money -= 150
             return True
-        return False
+        else: return False
 
     def release_from_jail(self):
         self.in_jail = False
@@ -22,7 +22,7 @@ class Player:
             "name": self.name,
             "money": self.money,
             "position": self.position,
-            "properties": [p.to_dict() for p in self.properties],
+            "properties": self.properties,
             "in_jail": self.in_jail,
             "jail_turns": self.jail_turns
         }
@@ -33,7 +33,7 @@ class Player:
             name=data['name'],
             money=data['money'],
             position=data['position'],
-            properties=[PropertySquare.from_dict(p) for p in data['properties']],
+            properties=['properties'],
             in_jail=data['in_jail'],
             jail_turns=data['jail_turns']
         )
