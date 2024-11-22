@@ -38,7 +38,11 @@ class Board:
 
     @classmethod
     def from_dict(cls, board_data):
-        squares = [Square.from_dict(data) for data in board_data]
+        squares = []
+        for data in board_data:
+            if "rent" in data:
+                squares.append(PropertySquare.from_dict(data))
+            else:squares.append(Square.from_dict(data))
         return cls(squares=squares)
 
     def move_player(self, player, steps):

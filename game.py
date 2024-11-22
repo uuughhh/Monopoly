@@ -1,5 +1,6 @@
 import random
 import json
+import string
 from model.board import Board
 from model.player import Player
 from model.gameboardDesign import GameboardDesigner
@@ -102,7 +103,11 @@ def initialize_players():
             if 2<= num_players <=6:
                 players = []
                 for i in range(num_players):
-                    name = input(f"Enter name for player {i + 1}: ")
+                    name = input(f"Enter name for player {i + 1} or press Enter to randomly generate a name: ")
+                    if len(name) == 0:
+                        letters = string.ascii_lowercase
+                        name = ''.join(random.choice(letters) for a in range(5))
+                        print(f"Randomly generated name {name} for player {i+1}")
                     players.append(Player(name))
                 return players
             else:
@@ -197,8 +202,8 @@ def print_all_players_status(players):
 
 def save_game(board, players):
     game_data = {
+        "players": [player.to_dict() for player in players],
         "board": board.to_dict(),
-        "players": [player.to_dict() for player in players]
     }
     with open('saved_game.json', 'w') as file:
         json.dump(game_data, file)

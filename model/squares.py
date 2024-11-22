@@ -1,4 +1,5 @@
 import random
+from model.player import Player
 
 class Square:
     def __init__(self, name, position):
@@ -16,11 +17,11 @@ class Square:
         return cls(name=data['name'],position=data['position'])
 
 class PropertySquare(Square):
-    def __init__(self, name, position, price, rent):
+    def __init__(self, name, position, price, rent, owner=None):
         super().__init__(name,position)
         self.price = price
         self.rent = rent
-        self.owner = None
+        self.owner = owner
 
     def to_dict(self):
         if self.owner == None:
@@ -40,11 +41,20 @@ class PropertySquare(Square):
 
     @classmethod
     def from_dict(cls, data):
-        return cls(name=data['name'],
-                   position=data['position'],
-                   price=data['price'],
-                   rent=data['rent'],
-                   owner=data['owner']
+        if data['owner'] != None:
+            owner = Player.from_dict(data['owner']),
+            return cls(name=data['name'],
+                    position=data['position'],
+                    price=data['price'],
+                    rent=data['rent'],
+                    owner=owner
+                )
+        else:
+            return cls(name=data['name'],
+                    position=data['position'],
+                    price=data['price'],
+                    rent=data['rent'],
+                    owner=None
                 )
 
     def land_on(self, player):

@@ -45,9 +45,9 @@ class GameboardDesigner:
             price, rent = None, None
 
             if square_type == "Property":
-                name = input(f"Enter name for square {position}").strip()
-                price = input(f"Enter price for {name} (or leave blank for no price): ").strip()
-                rent = input(f"Enter rent for {name} (or leave blank for no rent): ").strip()
+                name = input(f"Enter name for square {position}: ").strip()
+                price = input(f"Enter price for {name} : ").strip()
+                rent = input(f"Enter rent for {name} : ").strip()
                 price = int(price) if price else None
                 rent = int(rent) if rent else None
                 squares.append({
@@ -64,7 +64,9 @@ class GameboardDesigner:
                 })
 
         # Save the new gameboard to a CSV file
-        self.save_gameboard_to_csv(squares)
+        filename = input("\nEnter the name of the gameboard CSV file to save (no file extension needed): ").strip()
+        filename += "Board.csv"
+        self.save_gameboard_to_csv(squares,filename)
         print("New gameboard created and saved successfully!")
 
     def load_and_modify_gameboard(self):
@@ -90,7 +92,7 @@ class GameboardDesigner:
                     print(f"Current: {square['name']} , "
                           f"Price: {square['price']}, Rent: {square['rent']})")
 
-                    
+
 
                     new_type = self.select_square_type()
 
@@ -131,10 +133,10 @@ class GameboardDesigner:
         print("Invalid choice. Please try again.")
         return self.select_square_type(default)
 
-    def save_gameboard_to_csv(self, squares):
+    def save_gameboard_to_csv(self, squares,filename):
         """Save the gameboard to a CSV file."""
         try:
-            filename = input("\nEnter the name of the gameboard CSV file to save: ").strip()
+            
             with open(filename, "w", newline="") as file:
                 writer = csv.writer(file)
                 writer.writerow(["position", "name", "price", "rent"])
